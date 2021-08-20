@@ -1,40 +1,62 @@
-import React, { useReducer } from 'react'
+import React, { useEffect, useReducer } from 'react'
 
-import './styles/styles.css'
+import TodoAdd from './components/TodoAdd'
+import TodoList from './components/TodoList'
 import { todoReducer } from './todoReducer'
 
-const initialState = [
-  {
-    id: new Date().getTime(),
-    todo: 'Aprender React',
-    done: false
-  },
-  {
-    id: new Date().getTime(),
-    todo: 'Aprender Node',
-    done: false
-  }
-]
+import './styles/styles.css'
+
+const initialState = []
+
+const init = () => {
+  // return [
+  //   {
+  //     id: new Date().getTime(),
+  //     todo: 'Aprender React',
+  //     done: false
+  //   },
+  //   {
+  //     id: new Date().getTime(),
+  //     todo: 'Aprender Node',
+  //     done: false
+  //   }
+  // ]
+
+  //Extraer los todos del localstorage si existen, si no retorna un array vacio
+  //El local storage almacena string, por eso es necesario usar el metodo JSON.parse para transformalo a un objeto
+  return JSON.parse( localStorage.getItem( 'todos' ) ) || [];
+}
 
 export const TodoApp = () => {
 
-  const [ todos, dispatch ] = useReducer( todoReducer, initialState )
+  //Función init sirve para cargarle a nuestro estodo lo que quiera que retorne esta función
+  const [ todos, dispatch ] = useReducer( todoReducer, initialState, init )
 
-  const handleAddSubmit = (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    localStorage.setItem( "todos", JSON.stringify( todos ) )
+  }, [ todos ])
 
-    const newTodo = {
-      id: new Date().getTime(),
-      todo: 'Aprender Express',
-      done: false
-    };
+  const handleDelete = ( id ) => {
+    const deleteTodo = {
+      type: 'delete',
+      payload: id
+    }
 
-    const action = {
-      type: "addTodo",
-      payload : newTodo
-    };
+    dispatch( deleteTodo )
+  }
 
-    dispatch( action );
+  const handleComplete = ( todoId ) => {
+    dispatch({
+      type: 'toggle',
+      payload: todoId
+    })
+  }
+
+  const addTodo = ( newTodo ) => {
+    dispatch({
+      type: 'add',
+      payload: newTodo
+    })
   }
   
   return (
@@ -47,35 +69,11 @@ export const TodoApp = () => {
         <div className="col-7">
           <h4 className="text-center">Todos</h4>
           <hr/>
-          <ul className="list-group list-group-flush">
-            {
-              todos.map( ( todo,i ) => (
-                <li key={ todo.id } className="list-group-item">
-                  <p className="text-center"> { i + 1 }. { todo.todo } </p>
-                  <button className="btn btn-danger"> Eliminar </button>
-                </li>
-              ))
-            }
-          </ul>
+          <TodoList handleComplete={ handleComplete } handleDelete={ handleDelete } todos={ todos } />
         </div>
 
-        <div className="col-5" onSubmit={ handleAddSubmit }>
-            <h4 className="text-center">Aregar Todo</h4>
-            <hr/>
-            <form>
-              <input 
-                type="text" 
-                name="description" 
-                className="form-control"
-                placeholder="tarea...." 
-              />
-              <button 
-                type="submit" 
-                className="btn btn-primary"
-              >
-                Agregar
-              </button>
-            </form>
+        <div className="col-5" >
+            <TodoAdd addTodo={ addTodo }/>
         </div>
       </div>
 
