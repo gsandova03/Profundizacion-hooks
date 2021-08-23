@@ -23,12 +23,12 @@ export const MultipleCustomHooks = () => {
           :
             (
               <blockquote className="m-5 blockquote text-right">
-                <p><i>{ quote }</i></p>
-                <p><i>{ author }</i></p>
+                <p><i className="quote">{ quote }</i></p>
+                <p><i className="author">{ author }</i></p>
               </blockquote>
             )
         }
-        {
+        {/* {
           counter <= 1
           ?(
             <button disabled className="btn btn-primary m-1">Ant quote</button>      
@@ -37,8 +37,8 @@ export const MultipleCustomHooks = () => {
           :(
             <button onClick={ decrement } className="btn btn-primary m-1">Ant quote</button>
           )
-        }
-      <button onClick={ reset } className="btn btn-primary m-1">Reset</button>
+        } */}
+      {/* <button onClick={ reset } className="btn btn-primary m-1">Reset</button> */}
       <button onClick={ increment } className="btn btn-primary m-1">Sig quote</button>
     </div>
   )

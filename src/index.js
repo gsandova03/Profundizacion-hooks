@@ -15,9 +15,10 @@ import './index.css';
 // import { MemoHook } from './components/06-Memo/MemoHook';
 // import { CallBackHook } from './components/06-Memo/CallBackHook';
 // import { Padre } from './components/07-tarea-memo/Padre';
-import { TodoApp } from './components/08-useReducer/TodoApp';
+// import { TodoApp } from './components/08-useReducer/TodoApp';
+import { MainApp } from './components/09-useContext/MainApp';
 
 ReactDOM.render(
-  <TodoApp />,
+  <MainApp />,
   document.getElementById('root')
 )

@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pruebas en el componente <MultipleCustomHooks/> debe de renderizarce correctamente 1`] = `
+<div>
+  <h1>
+    Customs Hooks
+  </h1>
+  <hr />
+  <div
+    className=" alert alert-info text-center"
+  >
+    Loading ...
+  </div>
+  <button
+    className="btn btn-primary m-1"
+    onClick={[Function]}
+  >
+    Sig quote
+  </button>
+</div>
+`;
